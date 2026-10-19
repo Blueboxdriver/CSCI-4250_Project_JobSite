@@ -1,6 +1,6 @@
---Student Table
-DROP TABLE IF EXISTS Student;
-CREATE TABLE Student (
+--Faculty Table
+DROP TABLE IF EXISTS Faculty;
+CREATE TABLE Faculty (
   facultyId INTEGER PRIMARY KEY,
   facultyEmail TEXT NOT NULL,
   facultyPosition TEXT NOT NULL UNIQUE CHECK (facultyPosition IN ("Department Dean, Professor, Assoicate Professor"),
@@ -8,6 +8,6 @@ CREATE TABLE Student (
 );
 
 
---Faculty Table
+--Student Table
 
 --Posting Table
