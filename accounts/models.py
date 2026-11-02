@@ -23,10 +23,21 @@ class Student(models.Model):
         on_delete=models.CASCADE,
         related_name="student_profile"
     )
+
+    # Information displayed on the student's profile.
+    credentials = models.TextField(blank=True, default="")
+    experience = models.TextField(blank=True, default="")
+
+    # The student's employment advertisement.
+    advertisement = models.TextField(blank=True, default="")
+
+    # Indicates whether the student is actively seeking employment
     seeking_employment = models.BooleanField(default=False)
 
+    # The student's fields of study.
     fields_of_study = models.CharField(max_length=500)
 
+    # The student's classification (e.g., freshman, sophomore).
     classification = models.CharField(
         max_length=10,
         choices=[
@@ -37,6 +48,7 @@ class Student(models.Model):
         ],
     )
 
+    # The student's level (e.g., undergraduate, graduate).
     level = models.CharField(
         max_length=12,
         choices=[
