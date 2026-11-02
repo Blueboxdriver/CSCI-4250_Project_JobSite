@@ -101,6 +101,18 @@ For the admin panel:
 http://127.0.0.1:8000/admin/
 ```
 
+## Load Fictional Development Data
+
+With the virtual environment active and Django running in debug mode, create a sample student, faculty user, student profile, and job posting with:
+
+```bash
+python manage.py seed_sample_data
+```
+
+The command is safe to rerun. It creates fictional records using `example.test` email addresses. The sample accounts have unusable passwords and cannot log in.
+
+Faculty can create job postings at `/jobs/create/`; the server assigns the posting to the signed-in faculty user. Student and anonymous requests are denied.
+
 ## Common Development Commands
 
 After pulling new changes, run these as needed:
