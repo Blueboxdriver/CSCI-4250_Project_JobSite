@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETSU Student Jobs</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 2px solid black;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .top-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .job-postings {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .job-post {
+            border: 2px solid black;
+            min-height: 100px;
+            border-radius: 5px;
+        }
+
+        .about {
+            flex: 1;
+            border: 2px solid black;
+            padding: 15px;
+        }
+
+        .bottom-section {
+            border: 2px solid black;
+            min-height: 150px;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid black;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .top-section {
+                flex-direction: column;
+            }
+
+            .about {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>ETSU Student Jobs</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="about.html">About</a>
+        </nav>
+
+        <a href="login.html">Login</a>
+    </header>
+
+    <main>
+        <div class="top-section">
+            <section class="job-postings">
+                <article class="job-post"></article>
+                <article class="job-post"></article>
+                <article class="job-post"></article>
+            </section>
+
+            <section class="about">
+                <h2>About</h2>
+            </section>
+        </div>
+
+        <section class="bottom-section">
+        </section>
+    </main>
+
+    <footer>
+        <p>ETSU Student Jobs</p>
+    </footer>
+</body>
+</html>
