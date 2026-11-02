@@ -34,6 +34,7 @@ class Student(models.Model):
             ("sophomore", "Sophomore"),
             ("junior", "Junior"),
             ("senior", "Senior"),
+            ("graduate", "Graduate"),
         ],
     )
 

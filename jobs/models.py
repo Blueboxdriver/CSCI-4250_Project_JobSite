@@ -13,11 +13,20 @@ class JobPosting(models.Model):
         limit_choices_to={"role": "faculty"},
     )
 
-    # The posting's dates and description.
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(end_date__gte=models.F("start_date")),
+                name="job_end_Date_on_or_after_start_date",
+            )
+        ]
+
+    title = models.CharField(max_length=255) #Short name that students can search for
+    description = models.TextField() # Description of the job
     start_date = models.DateField()
     end_date = models.DateField()
-    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True) # Date the posting was created
 
     # Text Django displays for this posting, such as in the admin.
     def __str__(self):
-        return f"Job posting {self.pk}"
+        return self.title

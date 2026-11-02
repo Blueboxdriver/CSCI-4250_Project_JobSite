@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Create a job posting</title>
+</head>
+<body>
+    <main>
+        <h1>Create a job posting</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Publish posting</button>
+        </form>
+        <p><a href="{% url 'jobs:list' %}">Back to job postings</a></p>
+    </main>
+</body>
+</html>
