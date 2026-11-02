@@ -14,6 +14,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #00053E;
         }
 
         header {
@@ -22,12 +23,15 @@
             align-items: center;
             padding: 20px;
             border-bottom: 2px solid black;
+            color: #FFC72C;
         }
 
         nav {
             display: flex;
+            margin: 0 auto;
             gap: 20px;
         }
+
         main {
             max-width: 1100px;
             margin: 0 auto;
@@ -51,18 +55,24 @@
             border: 2px solid black;
             min-height: 100px;
             border-radius: 5px;
+            color: #00053E;
+            background-color: #FFC72C;
         }
 
         .about {
             flex: 1;
             border: 2px solid black;
             padding: 15px;
+            color: #00053E;
+            background-color: #FFC72C;
         }
 
         .bottom-section {
             border: 2px solid black;
             min-height: 150px;
             margin-top: 20px;
+            color: #00053E;
+            background-color: #FFC72C;
         }
 
         footer {
@@ -70,6 +80,8 @@
             padding: 20px;
             border-top: 2px solid black;
             margin-top: 20px;
+            margin-left: 10px;
+            color: #FFC72C;
         }
 
         @media (max-width: 600px) {
@@ -96,7 +108,7 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="jobs.html">Jobs</a>
-            <a href="about.html">About</a>
+            <a href="about.html">Applications</a>
         </nav>
 
         <a href="login.html">Login</a>
@@ -105,9 +117,15 @@
     <main>
         <div class="top-section">
             <section class="job-postings">
-                <article class="job-post"></article>
-                <article class="job-post"></article>
-                <article class="job-post"></article>
+                <article class="job-post">
+                    <h2>Job post</h2>
+                </article>
+                <article class="job-post">
+                    <h2>Job post</h2>
+                </article>
+                <article class="job-post">
+                    <h2>Job post</h2>
+                </article>
             </section>
 
             <section class="about">
@@ -116,11 +134,15 @@
         </div>
 
         <section class="bottom-section">
+            <h2>Blah Blah Blah</h2>
         </section>
     </main>
 
     <footer>
-        <p>ETSU Student Jobs</p>
+        <h2>ETSU Student Jobs</h2>
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="about.html">Applications</a>
     </footer>
 </body>
 </html>
