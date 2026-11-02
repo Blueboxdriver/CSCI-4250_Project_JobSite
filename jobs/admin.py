@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import JobPosting
+
+
+# Lets the admin create and edit job posting records.
+admin.site.register(JobPosting)
