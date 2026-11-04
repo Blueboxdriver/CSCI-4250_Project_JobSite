@@ -7,6 +7,14 @@ from .forms import JobPostingForm
 from .models import JobPosting
 
 
+def home(request):
+    job_postings = (
+        JobPosting.objects.select_related("faculty").all()
+        if request.user.is_authenticated else JobPosting.objects.none()
+    )
+    return render(request, "index.html", {"job_postings": job_postings})
+
+
 @login_required
 def job_posting_list(request):
     job_postings = JobPosting.objects.select_related("faculty").all()

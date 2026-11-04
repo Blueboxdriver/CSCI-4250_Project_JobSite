@@ -38,6 +38,8 @@ Both routes require approved faculty. Anonymous users redirect to login; signed-
 
 ## Jobs
 
+The homepage also renders saved postings inside the existing job-card section for signed-in users, using the same visibility rule as `/jobs/`. Anonymous visitors retain the original homepage placeholders; no posting details are disclosed. A signed-in user with no postings sees an empty-state message.
+
 | Field | Validation / behavior |
 | --- | --- |
 | `title` | Required, maximum 255 characters. |

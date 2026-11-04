@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import TemplateView
+from jobs.views import home
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="index.html"), name="home"),
+    path("", home, name="home"),
     path("admin/", admin.site.urls),
     path("jobs/", include("jobs.urls")),
     path("accounts/", include("accounts.urls")),

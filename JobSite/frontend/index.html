@@ -130,6 +130,20 @@
     <main>
         <div class="top-section">
             <section class="job-postings">
+                {% if user.is_authenticated %}
+                {% for posting in job_postings %}
+                <article class="job-post">
+                    <h2>{{ posting.title }}</h2>
+                    <p>{{ posting.description|linebreaksbr }}</p>
+                    <p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
+                    <p>{{ posting.start_date }} to {{ posting.end_date }}</p>
+                </article>
+                {% empty %}
+                <article class="job-post">
+                    <p>There are no job postings yet.</p>
+                </article>
+                {% endfor %}
+                {% else %}
                 <article class="job-post">
                     <h2>Job post</h2>
                 </article>
@@ -139,6 +153,7 @@
                 <article class="job-post">
                     <h2>Job post</h2>
                 </article>
+                {% endif %}
             </section>
 
             <section class="about">

@@ -80,3 +80,18 @@ class JobFlowTests(TestCase):
         client.force_login(self.faculty)
         self.assertEqual(client.post(reverse("jobs:create"), self.posting_data()).status_code, 403)
         self.assertFalse(JobPosting.objects.exists())
+
+    def test_homepage_displays_saved_jobs_only_when_signed_in(self):
+        posting = JobPosting.objects.create(faculty=self.faculty, **self.posting_data())
+        response = self.client.get(reverse("home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, posting.title)
+        self.client.force_login(self.student)
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, posting.title)
+        self.assertContains(response, posting.description)
+        self.assertContains(response, self.faculty.username)
+
+    def test_homepage_empty_state_for_signed_in_user(self):
+        self.client.force_login(self.student)
+        self.assertContains(self.client.get(reverse("home")), "There are no job postings yet.")
