@@ -28,6 +28,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=100, default="")
     student_id = models.CharField(max_length=30, default="")
     email_address = models.CharField(max_length=100, default="")
+    fields_of_study = models.CharField(max_length=100, default="")
     
     seeking_employment = models.BooleanField(default=False)
 
