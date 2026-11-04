@@ -1,0 +1,13 @@
+<!Doctype html>
+<head>
+</head>
+<body>
+	<h2>All Students</h2>
+	{% for student in allStudents %}
+		<li>{{ student.first_name }} {{ student.last_name }} {{ student.email_address }}</li>
+		<li>{{ student.email_address }}</li>
+		<li>{{ student.fields_of_study }}</li>
+		<li>{{ student.classification }}</li>
+		<br />
+	{% endfor %}
+</body>
