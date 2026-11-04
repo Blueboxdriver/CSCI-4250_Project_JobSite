@@ -51,11 +51,11 @@ class Student(models.Model):
         ],
     )
 
-    class Faculty(models.Model):
-        user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="faculty_profile"
+class Faculty(models.Model):
+    user = models.OneToOneField(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE,
+    related_name="faculty_profile"
     )
 
     first_name = models.CharField(max_length=100, default="")
