@@ -42,6 +42,7 @@ def registerStudent(request):
         return redirect("/students")
 
     return render(request, "signup.html")
+@csrf_exempt
 def registerFaculty(request):
     if request.method == "POST":
         mail = request.POST.get('email', '').strip()
