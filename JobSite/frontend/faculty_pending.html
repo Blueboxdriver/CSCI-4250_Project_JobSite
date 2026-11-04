@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Faculty approval pending</title>
+</head>
+<body>
+    <main>
+        <h1>Faculty approval pending</h1>
+        <p>Your account is registered. An administrator must approve it before faculty features are available.</p>
+        <a href="{% url 'home' %}">Return home</a>
+        <form action="{% url 'accounts:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </main>
+</body>
+</html>

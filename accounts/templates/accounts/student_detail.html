@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student profile</title>
+</head>
+<body>
+    <main>
+        <h1>{{ student.user.get_full_name|default:student.user.username }}</h1>
+        <p>{{ student.fields_of_study }} · {{ student.get_classification_display }} · {{ student.get_level_display }}</p>
+        <h2>Credentials</h2>
+        <p>{{ student.credentials|linebreaksbr }}</p>
+        <h2>Experience</h2>
+        <p>{{ student.experience|linebreaksbr }}</p>
+        <h2>Employment interests</h2>
+        <p>{{ student.advertisement|linebreaksbr }}</p>
+        <a href="{% url 'accounts:student_list' %}">Back to students</a>
+    </main>
+</body>
+</html>
