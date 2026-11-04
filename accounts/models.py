@@ -51,7 +51,7 @@ class Student(models.Model):
     )
 
     class Faculty(models.Model):
-    user = models.OneToOneField(
+        user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="faculty_profile"
