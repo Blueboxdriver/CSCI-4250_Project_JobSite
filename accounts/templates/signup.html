@@ -31,7 +31,7 @@
 		<input type='text' id='year' name='year' required><br />
 		<input type='submit' value='Submit'>
 	</form>
-	<form id='createAccountFaculty' method="POST" hidden>
+	<form id='createAccountFaculty' action="{% url 'accounts:registerFaculty' %}" method="POST" hidden>
 		{% csrf_token %}
 		<label for='firstName'>First Name</label><br />
 		<input type='text' id='firstName' name='firstName' required maxlength='100'><br />
