@@ -1,0 +1,12 @@
+<!Doctype html>
+<head>
+</head>
+<body>
+	<h2>All Staff</h2>
+	{% for faculty in allFaculty %}
+		<li>{{faculty.position}} {{ faculty.first_name }} {{ faculty.last_name }} {{ faculty.email_address }}</li>
+		<li>{{ faculty.department }}</li>
+		<li>{{ faculty.email_address }}</li>
+		<br />
+	{% endfor %}
+</body>
