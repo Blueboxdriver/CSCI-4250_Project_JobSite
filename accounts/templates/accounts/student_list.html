@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Students seeking employment</title>
+</head>
+<body>
+    <main>
+        <h1>Students seeking employment</h1>
+        {% for student in students %}
+            <article>
+                <h2><a href="{% url 'accounts:student_detail' student.id %}">{{ student.user.get_full_name|default:student.user.username }}</a></h2>
+                <p>{{ student.fields_of_study }} · {{ student.get_classification_display }}</p>
+            </article>
+        {% empty %}
+            <p>No students have published their profiles yet.</p>
+        {% endfor %}
+    </main>
+</body>
+</html>

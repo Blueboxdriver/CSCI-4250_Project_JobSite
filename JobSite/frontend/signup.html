@@ -1,62 +1,59 @@
-<!Doctype html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create an account</title>
 </head>
 <body>
-	<h2>Create Account</h2>
-	<form id='typeSelector'><br />
-		<p>I am a...</p>
-		<input onclick='isStudent()' type="radio" id='student' name='accountType'>
-		<label id='student' name='accountType'>Student</label>
-		<input onclick='isFaculty()' type='radio' id='faculty' name='accountType'>
-		<label id='faculty' name='accountType'>Faculty Member</label>
-	</form>
-	<br />
-	<form id='createAccountStudent' hidden>
-		<label for='firstName'>First Name</label><br />
-		<input type='text' id='firstName' name='firstName' required maxlength='100'><br />
-		<label for='lastName'>Last Name</label><br /> 
-		<input type='text' id='lastName' name='lastName' required maxlength='100'><br />
-		<label for='studentid'>Student ID</label><br />
-		<input type='text' id='studentId' name='studentId' required maxlength='20' pattern='E[0-9]+'><br />
-		<label for='email'>Email Address</label><br /> 
-		<input type='email' id='email' name='email' required maxlength='100' pattern='[A-Za-Z0-9]+@[A-Za-Z0-9]\.[a-z]{2,}'><br />
-		<label for='password'>Password</label><br />
-		<input type='password' id='password' name='password'><br />
-		<label for='field'>Field of Study</label><br />
-		<input type='field' id='field' name='field' required><br />
-		<label for='year'>Year</label><br />
-		<input type='text' id='year' name='year' required><br />
-		<input type='submit' value='Submit'>
-	</form>
-	
-	<form id='createAccountFaculty' onsubmit="handleSubmission(event)" hidden>
-		<label for='firstName'>First Name</label><br />
-		<input type='text' id='firstName' name='firstName' required maxlength='100'><br />
-		<label for='lastName'>Last Name</label><br /> 
-		<input type='text' id='lastName' name='lastName' required maxlength='100'><br />
-		<label for='facultyId'>Faculty ID</label><br /> 
-		<input type='text' id='facultyId' name='facultyId' required maxlength='30'><br />
-		<label for='email'>Email Address</label><br /> 
-		<input type='email' id='email' name='email' required maxlength='100' pattern='[A-Za-Z0-9]+@[A-Za-Z0-9]\.[a-z]{2,}'><br />
-		<label for='password'>Password</label><br />
-		<input type='password' id='password' name='password' required maxlength='100'><br />
-		<label for='department'>Department</label><br /> 
-		<input type='text' id='department' name='department' required maxlength='100'><br />
-		<label for='lastName'>Position</label><br /> 
-		<input type='text' id='position' name='position' required maxlength='100'><br />
-		<input type='submit' value='Submit'>
-	</form>
-	
-	<script>
-	function isStudent()
-	{
-		document.getElementById("createAccountFaculty").hidden = true;
-		document.getElementById("createAccountStudent").hidden = false;
-	}
-	function isFaculty()
-	{
-		document.getElementById("createAccountStudent").hidden = true;
-		document.getElementById("createAccountFaculty").hidden = false;
-	}
-	</script>
+    <main>
+        <h1>Create an account</h1>
+        <p>
+            <label><input type="radio" name="account_type" value="student" checked> Student</label>
+            <label><input type="radio" name="account_type" value="faculty"> Faculty</label>
+        </p>
+
+        <section id="student-signup">
+            <h2>Student registration</h2>
+            <form action="{% url 'accounts:signup' %}" method="post">
+                {% csrf_token %}
+                <h3>Account details</h3>
+                {{ student_user_form.as_p }}
+                <h3>Student profile</h3>
+                {{ student_profile_form.as_p }}
+                <button type="submit">Create student account</button>
+            </form>
+        </section>
+
+        <section id="faculty-signup" hidden>
+            <h2>Faculty registration</h2>
+            <form action="{% url 'accounts:faculty_signup' %}" method="post">
+                {% csrf_token %}
+                <h3>Account details</h3>
+                {{ faculty_user_form.as_p }}
+                <h3>Faculty details</h3>
+                {{ faculty_profile_form.as_p }}
+                <button type="submit">Request faculty access</button>
+            </form>
+            <p>An administrator must approve faculty accounts before they can use faculty features.</p>
+        </section>
+
+        <p><a href="{% url 'accounts:login' %}">Already registered? Log in</a></p>
+    </main>
+    <script>
+        const studentSection = document.getElementById("student-signup");
+        const facultySection = document.getElementById("faculty-signup");
+        for (const choice of document.querySelectorAll('input[name="account_type"]')) {
+            choice.addEventListener("change", () => {
+                studentSection.hidden = choice.value !== "student";
+                facultySection.hidden = choice.value !== "faculty";
+            });
+        }
+        if ("{{ signup_type }}" === "faculty") {
+            document.querySelector('input[name="account_type"][value="faculty"]').checked = true;
+            studentSection.hidden = true;
+            facultySection.hidden = false;
+        }
+    </script>
 </body>
+</html>

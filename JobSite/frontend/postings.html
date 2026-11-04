@@ -1,7 +1,25 @@
-<!Doctype html>
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campus job postings</title>
+</head>
 <body>
-<div style="float:left; width=30%;">
-
+    <main>
+        <h1>Campus job postings</h1>
+        <p><a href="{% url 'jobs:create' %}">Create a job posting</a></p>
+        {% for posting in job_postings %}
+            <article>
+                <h2>{{ posting.title }}</h2>
+                <p>{{ posting.description }}</p>
+                <p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
+                <p>{{ posting.start_date }} to {{ posting.end_date }}</p>
+            </article>
+        {% empty %}
+            <p>There are no job postings yet.</p>
+        {% endfor %}
+        <p><a href="{% url 'home' %}">Home</a></p>
+    </main>
 </body>
 </html>
