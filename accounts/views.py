@@ -42,10 +42,40 @@ def registerStudent(request):
         return redirect("/students")
 
     return render(request, "signup.html")
-def createFaculty(request):
-    return HttpResponseRedirect("/")
+def registerFaculty(request):
+    if request.method == "POST":
+        mail = request.POST.get('email', '').strip()
+        password = request.POST.get('password')
+        if User.objects.filter(username=mail).exists():
+            return render(request, "signup.html", {
+                'error': 'This email address is already registered.'
+            })
+        user = User.objects.create_user(
+            username=mail,
+            email=mail,
+            password=password
+        )
+        f = Faculty(
+            user=user,
+            first_name=request.POST.get('firstName'),
+            last_name=request.POST.get('lastName'),
+            faculty_id=request.POST.get('facultyId'),
+            email_address=mail,
+            department=request.POST.get('department'),
+            position=request.POST.get('position')
+        )
+        f.save()
+        login(request, user)
+        return redirect("/staff")
+
+    return render(request, "signup.html")
 def student_list(request):
     template = loader.get_template("students.html")
     allStudents = Student.objects.all().values()
     context = {'allStudents': allStudents}
+    return HttpResponse(template.render(context, request))
+def staff(request):
+    template = loader.get_template("staff.html")
+    allFaculty = Faculty.objects.all().values()
+    context = {'allFaculty': allFaculty}
     return HttpResponse(template.render(context, request))
