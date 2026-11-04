@@ -9,6 +9,7 @@
     <main>
         <h1>{{ student.user.get_full_name|default:student.user.username }}</h1>
         <p>{{ student.fields_of_study }} · {{ student.get_classification_display }} · {{ student.get_level_display }}</p>
+        <p>Seeking employment: {{ student.seeking_employment|yesno:"Yes,No" }}</p>
         <h2>Credentials</h2>
         <p>{{ student.credentials|linebreaksbr }}</p>
         <h2>Experience</h2>

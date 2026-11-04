@@ -12,7 +12,10 @@ class _CampusSignUpForm(UserCreationForm):
         fields = ("username", "first_name", "last_name")
 
     def clean_username(self):
-        username = super().clean_username().lower()
+        username = super().clean_username()
+        if username is None:
+            return username
+        username = username.lower()
         if User.objects.filter(email__iexact=username).exists():
             raise forms.ValidationError("An account already uses this email address.")
         return username

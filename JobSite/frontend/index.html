@@ -251,6 +251,20 @@
         <div class="top-section">
 
             <section class="job-postings">
+                {% if user.is_authenticated %}
+                {% for posting in job_postings %}
+                <article class="job-post">
+                    <h2>{{ posting.title }}</h2>
+                    <p>{{ posting.description|linebreaksbr }}</p>
+                    <p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
+                    <p>{{ posting.start_date }} to {{ posting.end_date }}</p>
+                </article>
+                {% empty %}
+                <article class="job-post">
+                    <p>There are no job postings yet.</p>
+                </article>
+                {% endfor %}
+                {% else %}
                 <article class="job-post">
                     <h2>Job Posting 1</h2>
                     <p>Job description and details.</p>
@@ -265,6 +279,7 @@
                     <h2>Job Posting 3</h2>
                     <p>Job description and details.</p>
                 </article>
+                {% endif %}
             </section>
 
             <section class="about">
@@ -281,6 +296,8 @@
                     and find opportunities that fit your
                     schedule and interests.
                 </p>
+                <p>Sign in to see non-scholarship campus jobs here on the home board, or select Jobs to browse the full list.</p>
+                <p>Students can use My Profile to share their experience and show they are seeking employment. Approved faculty can use Students to browse available student profiles and Jobs to create a posting.</p>
             </section>
 
         </div>
