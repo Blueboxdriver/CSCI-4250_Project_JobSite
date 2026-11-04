@@ -1,59 +1,79 @@
-<!doctype html>
-<html lang="en">
+<!Doctype html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Create an account</title>
 </head>
 <body>
-    <main>
-        <h1>Create an account</h1>
-        <p>
-            <label><input type="radio" name="account_type" value="student" checked> Student</label>
-            <label><input type="radio" name="account_type" value="faculty"> Faculty</label>
-        </p>
+	<h2>Create Account</h2>
+	<form id='typeSelector'><br />
+		<p>I am a...</p>
+		<input onclick='isStudent()' type="radio" id='student' name='accountType' checked>
+		<label for='student'>Student</label>
+		<input onclick='isFaculty()' type='radio' id='faculty' name='accountType'>
+		<label for='faculty'>Faculty Member</label>
+	</form>
+	<br />
+	<form id='createAccountStudent' action="{% url 'accounts:signup' %}" method="post">
+		{% csrf_token %}
+		{{ student_user_form.non_field_errors }}
+		{{ student_profile_form.non_field_errors }}
+		<label for='{{ student_user_form.first_name.id_for_label }}'>First Name</label><br />
+		{{ student_user_form.first_name }}{{ student_user_form.first_name.errors }}<br />
+		<label for='{{ student_user_form.last_name.id_for_label }}'>Last Name</label><br />
+		{{ student_user_form.last_name }}{{ student_user_form.last_name.errors }}<br />
+		<label for='{{ student_profile_form.student_id.id_for_label }}'>Student ID</label><br />
+		{{ student_profile_form.student_id }}{{ student_profile_form.student_id.errors }}<br />
+		<label for='{{ student_user_form.username.id_for_label }}'>Email Address</label><br />
+		{{ student_user_form.username }}{{ student_user_form.username.errors }}<br />
+		<label for='{{ student_user_form.password1.id_for_label }}'>Password</label><br />
+		{{ student_user_form.password1 }}{{ student_user_form.password1.errors }}<br />
+		<label for='{{ student_user_form.password2.id_for_label }}'>Confirm Password</label><br />
+		{{ student_user_form.password2 }}{{ student_user_form.password2.errors }}<br />
+		<label for='{{ student_profile_form.fields_of_study.id_for_label }}'>Field of Study</label><br />
+		{{ student_profile_form.fields_of_study }}{{ student_profile_form.fields_of_study.errors }}<br />
+		<label for='{{ student_profile_form.classification.id_for_label }}'>Year</label><br />
+		{{ student_profile_form.classification }}{{ student_profile_form.classification.errors }}<br />
+		<label for='{{ student_profile_form.level.id_for_label }}'>Level</label><br />
+		{{ student_profile_form.level }}{{ student_profile_form.level.errors }}<br />
+		<input type='submit' value='Submit'>
+	</form>
 
-        <section id="student-signup">
-            <h2>Student registration</h2>
-            <form action="{% url 'accounts:signup' %}" method="post">
-                {% csrf_token %}
-                <h3>Account details</h3>
-                {{ student_user_form.as_p }}
-                <h3>Student profile</h3>
-                {{ student_profile_form.as_p }}
-                <button type="submit">Create student account</button>
-            </form>
-        </section>
+	<form id='createAccountFaculty' action="{% url 'accounts:faculty_signup' %}" method="post" hidden>
+		{% csrf_token %}
+		{{ faculty_user_form.non_field_errors }}
+		{{ faculty_profile_form.non_field_errors }}
+		<label for='{{ faculty_user_form.first_name.id_for_label }}'>First Name</label><br />
+		{{ faculty_user_form.first_name }}{{ faculty_user_form.first_name.errors }}<br />
+		<label for='{{ faculty_user_form.last_name.id_for_label }}'>Last Name</label><br />
+		{{ faculty_user_form.last_name }}{{ faculty_user_form.last_name.errors }}<br />
+		<label for='{{ faculty_profile_form.faculty_id.id_for_label }}'>Faculty ID</label><br />
+		{{ faculty_profile_form.faculty_id }}{{ faculty_profile_form.faculty_id.errors }}<br />
+		<label for='{{ faculty_user_form.username.id_for_label }}'>Email Address</label><br />
+		{{ faculty_user_form.username }}{{ faculty_user_form.username.errors }}<br />
+		<label for='{{ faculty_user_form.password1.id_for_label }}'>Password</label><br />
+		{{ faculty_user_form.password1 }}{{ faculty_user_form.password1.errors }}<br />
+		<label for='{{ faculty_user_form.password2.id_for_label }}'>Confirm Password</label><br />
+		{{ faculty_user_form.password2 }}{{ faculty_user_form.password2.errors }}<br />
+		<label for='{{ faculty_profile_form.department.id_for_label }}'>Department</label><br />
+		{{ faculty_profile_form.department }}{{ faculty_profile_form.department.errors }}<br />
+		<label for='{{ faculty_profile_form.title.id_for_label }}'>Position</label><br />
+		{{ faculty_profile_form.title }}{{ faculty_profile_form.title.errors }}<br />
+		<input type='submit' value='Submit'>
+	</form>
 
-        <section id="faculty-signup" hidden>
-            <h2>Faculty registration</h2>
-            <form action="{% url 'accounts:faculty_signup' %}" method="post">
-                {% csrf_token %}
-                <h3>Account details</h3>
-                {{ faculty_user_form.as_p }}
-                <h3>Faculty details</h3>
-                {{ faculty_profile_form.as_p }}
-                <button type="submit">Request faculty access</button>
-            </form>
-            <p>An administrator must approve faculty accounts before they can use faculty features.</p>
-        </section>
-
-        <p><a href="{% url 'accounts:login' %}">Already registered? Log in</a></p>
-    </main>
-    <script>
-        const studentSection = document.getElementById("student-signup");
-        const facultySection = document.getElementById("faculty-signup");
-        for (const choice of document.querySelectorAll('input[name="account_type"]')) {
-            choice.addEventListener("change", () => {
-                studentSection.hidden = choice.value !== "student";
-                facultySection.hidden = choice.value !== "faculty";
-            });
-        }
-        if ("{{ signup_type }}" === "faculty") {
-            document.querySelector('input[name="account_type"][value="faculty"]').checked = true;
-            studentSection.hidden = true;
-            facultySection.hidden = false;
-        }
-    </script>
+	<script>
+	function isStudent()
+	{
+		document.getElementById("createAccountFaculty").hidden = true;
+		document.getElementById("createAccountStudent").hidden = false;
+	}
+	function isFaculty()
+	{
+		document.getElementById("createAccountStudent").hidden = true;
+		document.getElementById("createAccountFaculty").hidden = false;
+	}
+	if ("{{ signup_type }}" === "faculty")
+	{
+		document.getElementById("faculty").checked = true;
+		isFaculty();
+	}
+	</script>
 </body>
-</html>
