@@ -10,5 +10,5 @@ class CampusUserAdmin(UserAdmin):
     )
 
 
-admin.site.register(StudentProfile)
+admin.site.register(Student)
 # Register your models here.
