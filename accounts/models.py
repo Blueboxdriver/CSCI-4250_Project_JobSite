@@ -49,6 +49,27 @@ class Student(models.Model):
             ("grad", "Graduate"),
         ],
     )
+
+    class Faculty(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="faculty_profile"
+    )
+
+    first_name = models.CharField(max_length=100, default="")
+    last_name = models.CharField(max_length=100, default="")
+    faculty_id = models.CharField(max_length=30, default="")
+    email_address = models.CharField(max_length=100, default="")
+    department = models.CharField(max_length=100, default="")
+    position = models.CharField(
+        max_length=19,
+        choices=[
+            ("dean", "Dean"),
+            ("professor", "Professor"),
+            ("associate professor", "Associate Professor"),
+        ],
+    )
     
     def __str__(self):
         return self.user.username
