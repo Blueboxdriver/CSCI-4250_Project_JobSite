@@ -21,95 +21,110 @@ A Django-based job board application for students and faculty. This repository i
 
 ## Prerequisites
 
-Before starting, make sure you have:
+- Git and Python 3.10 or newer, with pip and virtual-environment support.
+- A writable project folder. SQLite needs write access to both `db.sqlite3` and its containing folder.
+- Linux: a terminal. Windows: PowerShell and a Python installation available through `py`.
 
-- Python installed
-- Git installed
-- A terminal or shell
+SQLite requires no database server. The current requirements also include `mysqlclient`, so installing the full dependency list may require its native build dependencies even though the app uses SQLite.
 
-## 1. Clone the Repository
+## First-time setup: Linux
+
+On Ubuntu/Debian, install the prerequisites below. Other distributions use different package names; see the [mysqlclient installation instructions](https://github.com/PyMySQL/mysqlclient#install).
+
+```bash
+sudo apt update
+sudo apt install git python3 python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
+```
+
+From the folder where you keep projects:
 
 ```bash
 git clone https://github.com/Blueboxdriver/CSCI-4250_Project_JobSite.git
 cd CSCI-4250_Project_JobSite
-```
-
-## 2. Create a Virtual Environment
-
-From the project root:
-
-```bash
-python -m venv .venv
-```
-
-Activate it:
-
-On macOS/Linux:
-
-```bash
+python3 -m venv .venv
 source .venv/bin/activate
-```
-
-On Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-## 3. Install Dependencies
-
-```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-## 4. Set Up the Database
-
-First generate a private local Django key (once per checkout). This command works in an activated virtual environment on Linux, macOS, and Windows and refuses to overwrite an existing `.env` file:
+Generate a private local key **once per checkout**, then prepare the database and create your own admin login:
 
 ```bash
 python -c "from pathlib import Path; from django.core.management.utils import get_random_secret_key; f = Path('.env').open('x'); f.write('DJANGO_SECRET_KEY=' + get_random_secret_key() + '\n'); f.close()"
-```
-
-If `.env` already exists, preserve it and add a `DJANGO_SECRET_KEY` value generated with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`. Settings load `.env` automatically; an existing environment variable takes precedence. Missing or blank keys stop startup with a configuration error. Keep the same private key across server restarts so sessions remain valid. `.env` is ignored by Git; never commit it or share its value.
-
-The previously committed development key is retired. Replacing it invalidates existing signed sessions; users can sign in again. This does not change passwords or stored profiles. These settings remain for local development (`DEBUG=True`), not a production deployment.
-
-This project is currently configured to use SQLite for local development. The database settings are in `config/settings.py` and point to a local file named `db.sqlite3` in the project root.
-
-Run the migrations:
-
-```bash
 python manage.py migrate
-```
-
-If this is the first time setting up the project, Django will create the database file automatically.
-
-## 5. Create a Superuser (Optional but Recommended)
-
-```bash
 python manage.py createsuperuser
-```
-
-Follow the prompts to create an admin account.
-
-## 6. Run the Development Server
-
-```bash
+python manage.py check
+python manage.py test
 python manage.py runserver
 ```
 
-Then open:
+## First-time setup: Windows (PowerShell)
 
-```text
-http://127.0.0.1:8000/
+Install Python and Git, then open a new PowerShell window. Confirm `py --version` and `git --version` work. Run these commands from the folder where you keep projects:
+
+```powershell
+git clone https://github.com/Blueboxdriver/CSCI-4250_Project_JobSite.git
+Set-Location CSCI-4250_Project_JobSite
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-For the admin panel:
+These instructions use the virtual environment's Python directly, so PowerShell script activation and execution-policy changes are unnecessary. If `mysqlclient` has no compatible binary wheel for your Python version/architecture, follow its [Windows build instructions](https://github.com/PyMySQL/mysqlclient#windows) before retrying dependency installation.
 
-```text
-http://127.0.0.1:8000/admin/
+Generate a private local key **once per checkout**, then prepare the database and create your own admin login:
+
+```powershell
+.\.venv\Scripts\python.exe -c "from pathlib import Path; from django.core.management.utils import get_random_secret_key; f = Path('.env').open('x'); f.write('DJANGO_SECRET_KEY=' + get_random_secret_key() + '\n'); f.close()"
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py createsuperuser
+.\.venv\Scripts\python.exe manage.py check
+.\.venv\Scripts\python.exe manage.py test
+.\.venv\Scripts\python.exe manage.py runserver
 ```
+
+## Open the app and approve faculty
+
+Keep the server terminal open and visit [the homepage](http://127.0.0.1:8000/). Stop the server with **Ctrl+C**.
+
+Register student/faculty accounts through the site. Sign in to see saved jobs on the homepage and Jobs page. A fresh database has no accounts or postings.
+
+For faculty approval, open [Django admin](http://127.0.0.1:8000/admin/) and use the username/password you chose with `createsuperuser`. There is no default admin login. Open the faculty record, enable **Is approved**, and save. Then sign in as the faculty user and open Jobs → Create a job posting. A faculty registration alone does not grant those privileges.
+
+## Run again after initial setup
+
+Open a terminal in `CSCI-4250_Project_JobSite` (the folder containing `manage.py`). Keep the existing `.env` and database; do not recreate them each time.
+
+Linux:
+
+```bash
+source .venv/bin/activate
+python manage.py runserver
+```
+
+Windows PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe manage.py runserver
+```
+
+After pulling team changes, reinstall requirements and apply committed migrations before starting the server:
+
+| Task | Linux (activated environment) | Windows PowerShell |
+| --- | --- | --- |
+| Dependencies | `python -m pip install -r requirements.txt` | `.\.venv\Scripts\python.exe -m pip install -r requirements.txt` |
+| Migrations | `python manage.py migrate` | `.\.venv\Scripts\python.exe manage.py migrate` |
+| Checks | `python manage.py check` | `.\.venv\Scripts\python.exe manage.py check` |
+| Tests | `python manage.py test` | `.\.venv\Scripts\python.exe manage.py test` |
+| Sample data | `python manage.py seed_sample_data` | `.\.venv\Scripts\python.exe manage.py seed_sample_data` |
+
+## Private local configuration
+
+The key-generation command refuses to overwrite an existing `.env`. If that file already exists, preserve it. If it lacks a key, generate one with the appropriate virtual-environment Python using `-c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`, then add `DJANGO_SECRET_KEY=<generated value>` to `.env` without angle brackets.
+
+Settings load `.env` automatically; an existing environment variable takes precedence. Missing or blank keys stop startup. Keep the same private key across restarts. Replacing it invalidates existing signed sessions, requiring users to sign in again; it does not change passwords or saved profiles. Never commit `.env` or `db.sqlite3`; both are ignored by Git.
+
+These instructions run the local development configuration (`DEBUG=True`), not a production deployment. Linux setup has been exercised on the development host; Windows commands have not been executed on a Windows machine.
 
 ## Load Fictional Development Data
 
@@ -156,10 +171,9 @@ For team acceptance on a fresh development database: run migrations, create a su
 
 ## Common Development Commands
 
-After pulling new changes, run these as needed:
+On Linux with the environment activated, run these checks as needed. On Windows, replace `python` with `.\.venv\Scripts\python.exe`:
 
 ```bash
-python manage.py makemigrations
 python manage.py migrate
 python manage.py check
 python manage.py test
@@ -175,10 +189,9 @@ AUTH_USER_MODEL = "accounts.User"
 
 That means when working with the database, always make sure that the `accounts` app migrations are up to date before migrating the whole project.
 
-If you ever run into migration issues on a fresh setup, try:
+Apply the migrations already committed to the repository:
 
 ```bash
-python manage.py makemigrations accounts jobs
 python manage.py migrate
 ```
 
@@ -200,20 +213,23 @@ The old `JobSite.sql` file appears to be a legacy prototype schema and should no
 
 ### Module not found / environment issues
 
-Make sure your virtual environment is active before running Django commands.
-
-```bash
-source .venv/bin/activate
-```
+Linux: activate with `source .venv/bin/activate`. Windows: use `.\.venv\Scripts\python.exe` directly. Install requirements with that same interpreter. If Linux reports `No module named venv`, install your distribution's Python venv package. If Windows cannot find `py`, check your Python installation before continuing.
 
 ### Migration errors
 
-Delete the local SQLite database only if you are intentionally resetting the project and want a fresh start:
+Run `manage.py showmigrations` and `manage.py migrate` with your platform's virtual-environment Python. Do not delete the database or generate replacement migrations just to resolve a startup error; that can discard local data or diverge from the team's schema. Only use `makemigrations` when intentionally changing models, then commit and review the resulting migration.
 
-```bash
-rm db.sqlite3
-python manage.py migrate
-```
+### Read-only database
+
+Run the server from a normal terminal with write access to the project folder and database. A server launched inside a read-only sandbox can display pages but cannot register accounts, save sessions, or publish jobs. Restart it with the required filesystem access; do not recreate the database.
+
+### Missing key or existing .env
+
+Follow Private local configuration above. `FileExistsError` from the one-time key command means `.env` already exists; preserve it rather than overwriting it.
+
+### Port already in use
+
+Stop your previous development server with Ctrl+C, or run `manage.py runserver 8001` using your platform's interpreter and open `http://127.0.0.1:8001/`.
 
 ### Permission or setup issues
 
@@ -232,6 +248,8 @@ python manage.py check
 5. Run `python manage.py migrate`
 6. Start the app with `python manage.py runserver`
 7. Create or update migrations when model files change
+
+On Windows, use `.\.venv\Scripts\python.exe` directly instead of activating the environment; use `-m pip` with that interpreter to install dependencies.
 
 ## Final Notes
 
