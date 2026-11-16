@@ -4,11 +4,6 @@ from django.db import models
 
 # One database record represents one job posting.
 class JobPosting(models.Model):
-    department = models.CharField(
-        max_length=255,
-        choices=DEPARTMENT_CHOICES,
-        default="Sodexo Dining Services",
-    )
     DEPARTMENT_CHOICES = [
         ("Office of International Enrollment and Services",
          "Office of International Enrollment and Services"),
@@ -26,6 +21,13 @@ class JobPosting(models.Model):
         ("Martin Center for the Arts", "Martin Center for the Arts"),
         ("Reece Museum", "Reece Museum"),
     ]
+    
+    department = models.CharField(
+        max_length=255,
+        choices=DEPARTMENT_CHOICES,
+        default="Sodexo Dining Services",
+    )
+    
     # Connects the posting to its faculty user.
     # The admin form will offer users whose role is faculty.
     faculty = models.ForeignKey(
