@@ -9,17 +9,33 @@
     <main>
         <h1>Campus job postings</h1>
         <p><a href="{% url 'jobs:create' %}">Create a job posting</a></p>
-        {% for posting in job_postings %}
-            <article>
-                <h2>{{ posting.title }}</h2>
-                <p>{{ posting.description }}</p>
-                <p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
-                <p>{{ posting.start_date }} to {{ posting.end_date }}</p>
-            </article>
-        {% empty %}
-            <p>There are no job postings yet.</p>
-        {% endfor %}
+        <div style='border-style:solid; border-color:blackwidth:30%; height:450px; float:left; overflow:scroll;'>
+			{% for posting in job_postings %}
+				<article onclick='ShowFullView(this)' data-description='{{posting.description}}' style='border-style:solid;'>
+					<h2>{{ posting.title }}</h2>
+					<p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
+					<p>{{ posting.start_date }} to {{ posting.end_date }}</p>
+				</article>
+			{% empty %}
+				<p>There are no job postings yet.</p>
+			{% endfor %}
+		</div>
+		<div id="JobWindow" style='border-style:solid; border-color:black; width:60%; height:450px; float:left; overflow: scroll; overflow-wrap: break-word;' hidden>
+			<h1 id='JobTitle'></h1><br />
+			<p id='Faculty'></p><br />
+			<span id='Description'></span><br />
+		</div><br />
         <p><a href="{% url 'home' %}">Home</a></p>
     </main>
 </body>
+<script>
+function ShowFullView(post)
+{
+	let elementChildren = post.children;
+	document.getElementById("Description").textContent = post.dataset.description;
+	document.getElementById("JobWindow").hidden = false;
+	document.getElementById("JobTitle").textContent = elementChildren[0].textContent;
+	document.getElementById("Faculty").textContent = elementChildren[1].textContent;
+}
+</script>
 </html>
