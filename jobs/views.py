@@ -17,9 +17,24 @@ def home(request):
 
 @login_required
 def job_posting_list(request):
-    job_postings = JobPosting.objects.select_related("faculty").all()
-    return render(request, "postings.html", {"job_postings": job_postings})
+    selected_department = request.GET.get("department", "")
 
+    valid_departments = {
+        value for value, label in JobPosting.DEPARTMENT_CHOICES
+    }
+
+    job_postings = JobPosting.objects.select_related("faculty").all()
+
+    if selected_department in valid_departments:
+        job_postings = job_postings.filter(department=selected_department)
+    else:
+        selected_department = ""
+
+    return render(request, "postings.html", {
+        "job_postings": job_postings,
+        "department_choices": JobPosting.DEPARTMENT_CHOICES,
+        "selected_department": selected_department,
+    })
 
 def job_posting_create(request):
     if not request.user.is_authenticated:

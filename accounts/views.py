@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
+from django.http import request
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
@@ -17,8 +18,7 @@ from .models import Faculty, Student, User
 def student_signup(request):
     if request.method == "POST":
         user_form = StudentSignUpForm(request.POST)
-        profile_form = StudentProfileForm(request.POST)
-
+        profile_form = StudentProfileForm(request.POST, request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             with transaction.atomic():
                 user = user_form.save(commit=False)
@@ -101,7 +101,7 @@ def student_profile_edit(request):
         raise PermissionDenied
     profile = Student.objects.filter(user=request.user).first()
     if request.method == "POST":
-        form = StudentProfileForm(request.POST, instance=profile)
+        form = StudentProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user
