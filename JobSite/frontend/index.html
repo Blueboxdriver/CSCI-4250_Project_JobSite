@@ -1,331 +1,222 @@
-
-<!DOCTYPE html>
+<!Doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETSU Student Jobs</title>
-
+    <title>ETSU Account Creation</title>
+    
     <style>
-        * {
-            box-sizing: border-box;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        font-family: Arial, sans-serif;
+        background-color: #00053E;
+        color: #FFFFFF;
+    }
+
+    h2 {
+        text-align: center;
+        color: #FFC72C;
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+
+    #typeSelector {
+        max-width: 500px;
+        margin: 0 auto 20px;
+        padding: 20px;
+        background-color: #FFFFFF;
+        color: #00053E;
+        border-radius: 6px;
+        text-align: center;
+    }
+
+    #typeSelector p {
+        font-size: 17px;
+        font-weight: bold;
+        margin: 0 0 15px;
+    }
+
+    #typeSelector input[type="radio"] {
+        accent-color: #00053E;
+        cursor: pointer;
+        margin-left: 15px;
+    }
+
+    #typeSelector label {
+        display: inline;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    #createAccountStudent,
+    #createAccountFaculty {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #FFFFFF;
+        color: #00053E;
+        border-radius: 6px;
+    }
+
+    form[hidden] {
+        display: none;
+    }
+
+    #createAccountStudent label,
+    #createAccountFaculty label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    #createAccountStudent input:not([type="submit"]),
+    #createAccountFaculty input:not([type="submit"]),
+    #createAccountStudent select,
+    #createAccountFaculty select,
+    #createAccountStudent textarea,
+    #createAccountFaculty textarea {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        background-color: #FFFFFF;
+        color: #00053E;
+    }
+
+    #createAccountStudent input:focus,
+    #createAccountFaculty input:focus,
+    #createAccountStudent select:focus,
+    #createAccountFaculty select:focus {
+        outline: none;
+        border-color: #FFC72C;
+        box-shadow: 0 0 4px #FFC72C;
+    }
+
+    input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 13px;
+        margin-top: 15px;
+        background-color: #FFC72C;
+        color: #00053E;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #E5B326;
+    }
+
+    .errorlist {
+        color: #B00020;
+        font-size: 13px;
+        padding-left: 20px;
+        margin: 5px 0 15px;
+    }
+
+    @media (max-width: 600px) {
         body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            font-family: Arial, sans-serif;
-            background-color: #00053E;
-            color: #FFFFFF;
+            padding: 20px 15px;
         }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            border-bottom: 2px solid #FFC72C;
-            gap: 20px;
-        }
-
-        header h1 {
-            color: #FFC72C;
-            font-size: 26px;
-            margin: 0;
-        }
-
-        nav {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        a {
-            color: #FFFFFF;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            color: #FFC72C;
-        }
-
-        .account-links {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .account-links form {
-            margin: 0;
-        }
-
-        .logout-button {
-            background: none;
-            border: none;
-            color: #FFFFFF;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .logout-button:hover {
-            color: #FFC72C;
-        }
-
-        main {
-            flex: 1;
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 35px 20px;
-        }
-
-        .top-section {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 25px;
-            align-items: stretch;
-        }
-
-        .job-postings {
-            flex: 1.5;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .job-post {
-            background-color: #FFFFFF;
-            color: #00053E;
-            border-radius: 6px;
-            padding: 20px;
-            min-height: 110px;
-        }
-
-        .job-post h2 {
-            font-size: 20px;
-            margin: 0 0 10px;
-        }
-
-        .job-post p {
-            margin: 0;
-            color: #555555;
-            font-size: 14px;
-        }
-
-        .job-post:hover {
-            background-color: #F5F5F5;
-        }
-
-        .about {
-            flex: 1;
-            background-color: #FFFFFF;
-            color: #00053E;
-            border-radius: 6px;
-            padding: 25px;
-        }
-
-        .about h2 {
-            margin-top: 0;
+        h2 {
             font-size: 24px;
         }
 
-        .about p {
-            line-height: 1.7;
-            color: #444444;
+        #typeSelector,
+        #createAccountStudent,
+        #createAccountFaculty {
+            padding: 20px;
         }
-
-        .bottom-section {
-            background-color: #FFFFFF;
-            color: #00053E;
-            border-radius: 6px;
-            padding: 30px;
-            min-height: 150px;
-        }
-
-        .bottom-section h2 {
-            margin-top: 0;
-        }
-
-        .bottom-section p {
-            line-height: 1.6;
-            color: #444444;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px 20px;
-            border-top: 2px solid #FFC72C;
-            margin-top: auto;
-        }
-
-        footer h2 {
-            color: #FFC72C;
-            font-size: 20px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 700px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav {
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .account-links {
-                justify-content: center;
-            }
-
-            .top-section {
-                flex-direction: column;
-            }
-
-            .about {
-                min-height: 200px;
-            }
-
-            .footer-links {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
-
 <body>
-    <header>
-        <h1>ETSU Student Jobs</h1>
+	<h2>Create Account</h2>
+	<form id='typeSelector'><br />
+		<p>I am a...</p>
+		<input onclick='isStudent()' type="radio" id='student' name='accountType' checked>
+		<label for='student'>Student</label>
+		<input onclick='isFaculty()' type='radio' id='faculty' name='accountType'>
+		<label for='faculty'>Faculty Member</label>
+	</form>
+	<br />
+	<form id='createAccountStudent' action="{% url 'accounts:signup' %}" method="post">
+		{% csrf_token %}
+		{{ student_user_form.non_field_errors }}
+		{{ student_profile_form.non_field_errors }}
+		<label for='{{ student_user_form.first_name.id_for_label }}'>First Name</label><br />
+		{{ student_user_form.first_name }}{{ student_user_form.first_name.errors }}<br />
+		<label for='{{ student_user_form.last_name.id_for_label }}'>Last Name</label><br />
+		{{ student_user_form.last_name }}{{ student_user_form.last_name.errors }}<br />
+		<label for='{{ student_profile_form.student_id.id_for_label }}'>Student ID</label><br />
+		{{ student_profile_form.student_id }}{{ student_profile_form.student_id.errors }}<br />
+		<label for='{{ student_user_form.username.id_for_label }}'>Email Address</label><br />
+		{{ student_user_form.username }}{{ student_user_form.username.errors }}<br />
+		<label for='{{ student_user_form.password1.id_for_label }}'>Password</label><br />
+		{{ student_user_form.password1 }}{{ student_user_form.password1.errors }}<br />
+		<label for='{{ student_user_form.password2.id_for_label }}'>Confirm Password</label><br />
+		{{ student_user_form.password2 }}{{ student_user_form.password2.errors }}<br />
+		<label for='{{ student_profile_form.fields_of_study.id_for_label }}'>Field of Study</label><br />
+		{{ student_profile_form.fields_of_study }}{{ student_profile_form.fields_of_study.errors }}<br />
+		<label for='{{ student_profile_form.classification.id_for_label }}'>Year</label><br />
+		{{ student_profile_form.classification }}{{ student_profile_form.classification.errors }}<br />
+		<label for='{{ student_profile_form.level.id_for_label }}'>Level</label><br />
+		{{ student_profile_form.level }}{{ student_profile_form.level.errors }}<br />
+		<input type='submit' value='Submit'>
+	</form>
 
-        <nav>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'jobs:list' %}">Jobs</a>
+	<form id='createAccountFaculty' action="{% url 'accounts:faculty_signup' %}" method="post" hidden>
+		{% csrf_token %}
+		{{ faculty_user_form.non_field_errors }}
+		{{ faculty_profile_form.non_field_errors }}
+		<label for='{{ faculty_user_form.first_name.id_for_label }}'>First Name</label><br />
+		{{ faculty_user_form.first_name }}{{ faculty_user_form.first_name.errors }}<br />
+		<label for='{{ faculty_user_form.last_name.id_for_label }}'>Last Name</label><br />
+		{{ faculty_user_form.last_name }}{{ faculty_user_form.last_name.errors }}<br />
+		<label for='{{ faculty_profile_form.faculty_id.id_for_label }}'>Faculty ID</label><br />
+		{{ faculty_profile_form.faculty_id }}{{ faculty_profile_form.faculty_id.errors }}<br />
+		<label for='{{ faculty_user_form.username.id_for_label }}'>Email Address</label><br />
+		{{ faculty_user_form.username }}{{ faculty_user_form.username.errors }}<br />
+		<label for='{{ faculty_user_form.password1.id_for_label }}'>Password</label><br />
+		{{ faculty_user_form.password1 }}{{ faculty_user_form.password1.errors }}<br />
+		<label for='{{ faculty_user_form.password2.id_for_label }}'>Confirm Password</label><br />
+		{{ faculty_user_form.password2 }}{{ faculty_user_form.password2.errors }}<br />
+		<label for='{{ faculty_profile_form.department.id_for_label }}'>Department</label><br />
+		{{ faculty_profile_form.department }}{{ faculty_profile_form.department.errors }}<br />
+		<label for='{{ faculty_profile_form.title.id_for_label }}'>Position</label><br />
+		{{ faculty_profile_form.title }}{{ faculty_profile_form.title.errors }}<br />
+		<input type='submit' value='Submit'>
+	</form>
 
-            {% if user.is_authenticated and user.role == 'student' %}
-                <a href="{% url 'accounts:student_profile_edit' %}">
-                    My Profile
-                </a>
-
-            {% elif user.is_authenticated and user.role == 'faculty' %}
-                {% if user.faculty_profile.is_approved %}
-                    <a href="{% url 'accounts:student_list' %}">
-                        Students
-                    </a>
-                {% endif %}
-
-            {% else %}
-                <a href="{% url 'accounts:signup' %}">
-                    Sign Up
-                </a>
-            {% endif %}
-        </nav>
-
-        <div class="account-links">
-            {% if user.is_authenticated %}
-                <form action="{% url 'accounts:logout' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-button">
-                        Log Out
-                    </button>
-                </form>
-            {% else %}
-                <a href="{% url 'accounts:login' %}">Login</a>
-            {% endif %}
-        </div>
-    </header>
-
-    <main>
-        <div class="top-section">
-
-            <section class="job-postings">
-                {% if user.is_authenticated %}
-                {% for posting in job_postings %}
-                <article class="job-post">
-                    <h2>{{ posting.title }}</h2>
-                    <p>{{ posting.description|linebreaksbr }}</p>
-                    <p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
-                    <p>{{ posting.start_date }} to {{ posting.end_date }}</p>
-                </article>
-                {% empty %}
-                <article class="job-post">
-                    <p>There are no job postings yet.</p>
-                </article>
-                {% endfor %}
-                {% else %}
-                <article class="job-post">
-                    <h2>Job Posting 1</h2>
-                    <p>Job description and details.</p>
-                </article>
-
-                <article class="job-post">
-                    <h2>Job Posting 2</h2>
-                    <p>Job description and details.</p>
-                </article>
-
-                <article class="job-post">
-                    <h2>Job Posting 3</h2>
-                    <p>Job description and details.</p>
-                </article>
-                {% endif %}
-            </section>
-
-            <section class="about">
-                <h2>About</h2>
-
-                <p>
-                    Welcome to ETSU Student Jobs!
-                    This website helps connect ETSU students
-                    with available employment opportunities.
-                </p>
-
-                <p>
-                    Browse job postings, explore positions,
-                    and find opportunities that fit your
-                    schedule and interests.
-                </p>
-                <p>Sign in to see non-scholarship campus jobs here on the home board, or select Jobs to browse the full list.</p>
-                <p>Students can use My Profile to share their experience and show they are seeking employment. Approved faculty can use Students to browse available student profiles and Jobs to create a posting.</p>
-            </section>
-
-        </div>
-
-        <section class="bottom-section">
-            <h2>Find Your Next Opportunity</h2>
-
-            <p>
-                Explore student employment opportunities
-                and begin building your professional
-                experience while attending ETSU.
-            </p>
-        </section>
-    </main>
-
-    <footer>
-        <h2>ETSU Student Jobs</h2>
-
-        <div class="footer-links">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'jobs:list' %}">Jobs</a>
-
-            {% if not user.is_authenticated %}
-                <a href="{% url 'accounts:signup' %}">
-                    Sign Up
-                </a>
-            {% endif %}
-        </div>
-    </footer>
+	<script>
+	function isStudent()
+	{
+		document.getElementById("createAccountFaculty").hidden = true;
+		document.getElementById("createAccountStudent").hidden = false;
+	}
+	function isFaculty()
+	{
+		document.getElementById("createAccountStudent").hidden = true;
+		document.getElementById("createAccountFaculty").hidden = false;
+	}
+	if ("{{ signup_type }}" === "faculty")
+	{
+		document.getElementById("faculty").checked = true;
+		isFaculty();
+	}
+	</script>
 </body>
-</html>
