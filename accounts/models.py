@@ -28,6 +28,11 @@ class Student(models.Model):
     experience = models.TextField(blank=True, default="")
     advertisement = models.TextField(blank=True, default="")
     seeking_employment = models.BooleanField(default=False)
+    resume = models.FileField(
+        upload_to="resumes/",
+        blank=True,
+        null=True
+    )
 
     fields_of_study = models.CharField(max_length=500)
 

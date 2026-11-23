@@ -59,6 +59,7 @@ class StudentProfileForm(forms.ModelForm):
             "experience",
             "advertisement",
             "seeking_employment",
+            "resume",
         )
 
 
