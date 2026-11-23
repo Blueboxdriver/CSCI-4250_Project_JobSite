@@ -1,18 +1,113 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Faculty approval pending</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Approval Pending</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #00053E;
+            color: #FFFFFF;
+        }
+
+        main {
+            width: 100%;
+            max-width: 500px;
+            background-color: #FFFFFF;
+            color: #00053E;
+            padding: 40px 30px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin: 0 0 20px;
+            color: #00053E;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #444444;
+            margin-bottom: 30px;
+        }
+
+        .home-button {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            background-color: #FFC72C;
+            color: #00053E;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .home-button:hover {
+            background-color: #E5B326;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .logout-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FFFFFF;
+            color: #00053E;
+            border: 2px solid #00053E;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #F5F5F5;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
 </head>
 <body>
     <main>
-        <h1>Faculty approval pending</h1>
-        <p>Your account is registered. An administrator must approve it before faculty features are available.</p>
-        <a href="{% url 'home' %}">Return home</a>
+        <h1>Faculty Approval Pending</h1>
+        <p>
+            Your account is registered. An administrator must
+            approve it before faculty features are available.
+        </p>
+        <a href="{% url 'home' %}" class="home-button">
+            Return Home
+        </a>
         <form action="{% url 'accounts:logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit">Log out</button>
+            <button type="submit" class="logout-button">
+                Log Out
+            </button>
         </form>
     </main>
 </body>

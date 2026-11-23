@@ -25,10 +25,65 @@
 		<input type='email' id='email' name='email' required maxlength='100' pattern='[A-Za-Z0-9]+@[A-Za-Z0-9]\.[a-z]{2,}'><br />
 		<label for='password'>Password</label><br />
 		<input type='password' id='password' name='password'><br />
-		<label for='field'>Field of Study</label><br />
-		<input type='field' id='field' name='field' required><br />
+		<label for='field1'>Major 1</label><br />
+		<select id='field1' name='field1' required>
+			<option></option selected>
+			<option>Art</option>
+			<option>Biology</option>
+			<option>Business</option>
+			<option>Computing</option>
+			<option>English</option>
+			<option>Music</option>
+			<option>Nursing</option>
+			<option>Philosophy</option>
+		</select><br />
+		<label for='field2'>Major 2</label><br />
+		<select id='field2' name='field2'>
+			<option></option selected>
+			<option>Art</option>
+			<option>Biology</option>
+			<option>Business</option>
+			<option>Computing</option>
+			<option>English</option>
+			<option>Music</option>
+			<option>Nursing</option>
+			<option>Philosophy</option>
+		</select><br />
+		<label for='field3'>Minor 1</label><br />
+		<select id='field3' name='field3'>
+			<option></option selected>
+			<option>Art</option>
+			<option>Biology</option>
+			<option>Business</option>
+			<option>Computing</option>
+			<option>English</option>
+			<option>Music</option>
+			<option>Nursing</option>
+			<option>Philosophy</option>
+		</select><br />
+		<label for='field4'>Minor 2</label><br />
+		<select id='field4' name='field4'>
+			<option></option selected>
+			<option>Art</option>
+			<option>Biology</option>
+			<option>Business</option>
+			<option>Computing</option>
+			<option>English</option>
+			<option>Music</option>
+			<option>Nursing</option>
+			<option>Philosophy</option>
+		</select><br />
 		<label for='year'>Year</label><br />
-		<input type='text' id='year' name='year' required><br />
+		<select id='year' name='year' required>
+			<option></option selected>
+			<option>Freshman</option>
+			<option>Sophomore</option>
+			<option>Junior</option>
+			<option>Senior</option>
+			<option>Graduate</option>
+		</select><br />
+		<label for='resume'>Resume</label><br />
+		<input type='file' id='resume' name='resume' required><br />
 		<input type='submit' value='Submit'>
 	</form>
 	{% if error %}
