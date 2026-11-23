@@ -1,41 +1,333 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Campus job postings</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Job Postings</title>
+
+	<style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #00053E;
+            color: #FFFFFF;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            border-bottom: 2px solid #FFC72C;
+        }
+
+        header h2 {
+            margin: 0;
+            color: #FFC72C;
+            font-size: 24px;
+        }
+
+        a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #FFC72C;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 20px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-heading h1 {
+            color: #FFC72C;
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .create-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #FFC72C;
+            color: #00053E;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .create-button:hover {
+            background-color: #E5B326;
+            color: #00053E;
+        }
+		
+        .jobs-container {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .jobs-list {
+            flex: 1;
+            min-width: 0;
+            height: 500px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #FFFFFF;
+            border-radius: 6px;
+            color: #00053E;
+        }
+
+        .jobs-list h2 {
+            font-size: 20px;
+            margin: 0 0 15px;
+        }
+
+        /* Individual Job Posting */
+        .job-post {
+            border: 1px solid #DDDDDD;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 12px;
+            background-color: #FFFFFF;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .job-post:hover {
+            background-color: #F5F5F5;
+            border-color: #FFC72C;
+        }
+
+        .job-post:focus-visible {
+            outline: 3px solid #FFC72C;
+            outline-offset: 2px;
+        }
+
+        .job-post.selected {
+            border: 2px solid #FFC72C;
+            background-color: #FFF9E6;
+        }
+
+        .job-post h2 {
+            font-size: 18px;
+            margin: 0 0 10px;
+            color: #00053E;
+        }
+
+        .job-post p {
+            font-size: 14px;
+            color: #555555;
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+		
+        .job-details {
+            flex: 1.5;
+            min-width: 0;
+            height: 500px;
+            overflow-y: auto;
+            overflow-wrap: break-word;
+            background-color: #FFFFFF;
+            color: #00053E;
+            padding: 25px;
+            border-radius: 6px;
+        }
+
+        .job-details h1 {
+            font-size: 24px;
+            margin: 0 0 15px;
+        }
+
+        .job-details p {
+            font-size: 15px;
+            color: #444444;
+            line-height: 1.6;
+        }
+
+        #Faculty {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #Description {
+            display: block;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #444444;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .job-placeholder {
+            flex: 1.5;
+            min-width: 0;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFFFFF;
+            color: #00053E;
+            border-radius: 6px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .job-placeholder h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .job-placeholder p {
+            color: #555555;
+            line-height: 1.6;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .page-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-heading h1 {
+                font-size: 24px;
+            }
+
+            .jobs-container {
+                flex-direction: column;
+            }
+
+            .jobs-list {
+                flex: none;
+                height: 300px;
+            }
+
+            .job-details,
+            .job-placeholder {
+                flex: none;
+                height: auto;
+                min-height: 300px;
+                max-height: 500px;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <header>
+        <h2>ETSU Student Jobs</h2>
+        <a href="{% url 'home' %}">Home</a>
+    </header>
+
     <main>
-        <h1>Campus job postings</h1>
-        <p><a href="{% url 'jobs:create' %}">Create a job posting</a></p>
-        <div style='border-style:solid; border-color:blackwidth:30%; height:450px; float:left; overflow:scroll;'>
-			{% for posting in job_postings %}
-				<article onclick='ShowFullView(this)' data-description='{{posting.description}}' style='border-style:solid;'>
-					<h2>{{ posting.title }}</h2>
-					<p>Faculty: {{ posting.faculty.get_full_name|default:posting.faculty.username }}</p>
-					<p>{{ posting.start_date }} to {{ posting.end_date }}</p>
-				</article>
-			{% empty %}
-				<p>There are no job postings yet.</p>
-			{% endfor %}
-		</div>
-		<div id="JobWindow" style='border-style:solid; border-color:black; width:60%; height:450px; float:left; overflow: scroll; overflow-wrap: break-word;' hidden>
-			<h1 id='JobTitle'></h1><br />
-			<p id='Faculty'></p><br />
-			<span id='Description'></span><br />
-		</div><br />
-        <p><a href="{% url 'home' %}">Home</a></p>
+        <div class="page-heading">
+            <h1>Campus Job Postings</h1>
+
+            <a href="{% url 'jobs:create' %}" class="create-button">
+                Create a Job Posting
+            </a>
+        </div>
+
+        <div class="jobs-container">
+            <section class="jobs-list">
+                <h2>Available Positions</h2>
+
+                {% for posting in job_postings %}
+                    <article
+                        class="job-post"
+                        role="button"
+                        tabindex="0"
+                        data-description="{{ posting.description }}"
+                        onclick="ShowFullView(this)"
+                        onkeydown="if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            ShowFullView(this);
+                        }"
+                    >
+                        <h2 class="job-title">
+                            {{ posting.title }}
+                        </h2>
+
+                        <p class="job-faculty">
+                            Faculty:
+                            {{ posting.faculty.get_full_name|default:posting.faculty.username }}
+                        </p>
+
+                        <p class="job-dates">
+                            {{ posting.start_date }} to {{ posting.end_date }}
+                        </p>
+                    </article>
+
+                {% empty %}
+                    <p>There are no job postings yet.</p>
+                {% endfor %}
+            </section>
+
+            <section class="job-placeholder" id="JobPlaceholder">
+                <h2>Job Details</h2>
+                <p>
+                    Select a job posting from the left
+                    to view its full description and details.
+                </p>
+            </section>
+
+            <section class="job-details" id="JobWindow" hidden>
+                <h1 id="JobTitle"></h1>
+                <p id="Faculty"></p>
+                <h3>Job Description</h3>
+                <span id="Description"></span>
+            </section>
+
+        </div>
     </main>
+
+    <script>
+        function ShowFullView(post) {
+            let title = post.querySelector(".job-title").textContent;
+            let faculty = post.querySelector(".job-faculty").textContent;
+            let description = post.dataset.description;
+
+            document.getElementById("JobTitle").textContent = title;
+            document.getElementById("Faculty").textContent = faculty;
+            document.getElementById("Description").textContent = description;
+
+            document.getElementById("JobPlaceholder").hidden = true;
+            document.getElementById("JobWindow").hidden = false;
+
+            let postings = document.querySelectorAll(".job-post");
+
+            postings.forEach(function(item) {
+                item.classList.remove("selected");
+            });
+
+            post.classList.add("selected");
+        }
+    </script>
 </body>
-<script>
-function ShowFullView(post)
-{
-	let elementChildren = post.children;
-	document.getElementById("Description").textContent = post.dataset.description;
-	document.getElementById("JobWindow").hidden = false;
-	document.getElementById("JobTitle").textContent = elementChildren[0].textContent;
-	document.getElementById("Faculty").textContent = elementChildren[1].textContent;
-}
-</script>
 </html>
